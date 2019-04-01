@@ -37,6 +37,9 @@ class SpotsListViewController: UIViewController {
     // Be sure to call this from viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        spots.loadData {
+            self.tableView.reloadData()
+        }
         signIn()
     }
     
@@ -80,9 +83,6 @@ class SpotsListViewController: UIViewController {
 }
 
 extension SpotsListViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return spots.spotArray.count
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SpotsTableViewCell
@@ -90,12 +90,14 @@ extension SpotsListViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return spots.spotArray.count
     }
     
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
 }
 
 extension SpotsListViewController: FUIAuthDelegate {
